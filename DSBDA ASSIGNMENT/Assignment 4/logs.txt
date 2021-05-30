@@ -1,0 +1,382 @@
+deepak@deepak-IdeaPad-Flex-5-14ARE05:~/Documents/4329-Kunal Khanra-Assn-4$ cd ~
+deepak@deepak-IdeaPad-Flex-5-14ARE05:~$ cd hadoop/hadoop-3.3.0/
+
+#Starting of hadoop
+
+deepak@deepak-IdeaPad-Flex-5-14ARE05:~/hadoop/hadoop-3.3.0$ sbin/start-all.sh
+WARNING: Attempting to start all Apache Hadoop daemons as deepak in 10 seconds.
+WARNING: This is not a recommended production deployment configuration.
+WARNING: Use CTRL-C to abort.
+Starting namenodes on [0.0.0.0]
+Starting datanodes
+Starting secondary namenodes [deepak-IdeaPad-Flex-5-14ARE05]
+Starting resourcemanager
+Starting nodemanagers
+
+#Starting Hive Shell
+
+deepak@deepak-IdeaPad-Flex-5-14ARE05:~/hadoop/hadoop-3.3.0$ cd ~
+deepak@deepak-IdeaPad-Flex-5-14ARE05:~$ cd hive/bin
+deepak@deepak-IdeaPad-Flex-5-14ARE05:~/hive/bin$ ./hive
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/home/deepak/hive/lib/log4j-slf4j-impl-2.10.0.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/home/deepak/hadoop/hadoop-3.3.0/share/hadoop/common/lib/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.apache.logging.slf4j.Log4jLoggerFactory]
+Hive Session ID = 6a577f1c-7e4d-4c77-b0b9-9b569112248c
+
+Logging initialized using configuration in jar:file:/home/deepak/hive/lib/hive-common-3.1.2.jar!/hive-log4j2.properties Async: true
+2021-05-29 13:59:42,395 INFO  [6a577f1c-7e4d-4c77-b0b9-9b569112248c main] DataNucleus.Persistence: Property datanucleus.cache.level2 unknown - will be ignored
+2021-05-29 13:59:43,979 WARN  [6a577f1c-7e4d-4c77-b0b9-9b569112248c main] DataNucleus.MetaData: Metadata has jdbc-type of null yet this is not valid. Ignored
+2021-05-29 13:59:43,980 WARN  [6a577f1c-7e4d-4c77-b0b9-9b569112248c main] DataNucleus.MetaData: Metadata has jdbc-type of null yet this is not valid. Ignored
+2021-05-29 13:59:43,981 WARN  [6a577f1c-7e4d-4c77-b0b9-9b569112248c main] DataNucleus.MetaData: Metadata has jdbc-type of null yet this is not valid. Ignored
+2021-05-29 13:59:43,981 WARN  [6a577f1c-7e4d-4c77-b0b9-9b569112248c main] DataNucleus.MetaData: Metadata has jdbc-type of null yet this is not valid. Ignored
+2021-05-29 13:59:43,981 WARN  [6a577f1c-7e4d-4c77-b0b9-9b569112248c main] DataNucleus.MetaData: Metadata has jdbc-type of null yet this is not valid. Ignored
+2021-05-29 13:59:43,981 WARN  [6a577f1c-7e4d-4c77-b0b9-9b569112248c main] DataNucleus.MetaData: Metadata has jdbc-type of null yet this is not valid. Ignored
+2021-05-29 13:59:45,209 WARN  [6a577f1c-7e4d-4c77-b0b9-9b569112248c main] DataNucleus.MetaData: Metadata has jdbc-type of null yet this is not valid. Ignored
+2021-05-29 13:59:45,209 WARN  [6a577f1c-7e4d-4c77-b0b9-9b569112248c main] DataNucleus.MetaData: Metadata has jdbc-type of null yet this is not valid. Ignored
+2021-05-29 13:59:45,210 WARN  [6a577f1c-7e4d-4c77-b0b9-9b569112248c main] DataNucleus.MetaData: Metadata has jdbc-type of null yet this is not valid. Ignored
+2021-05-29 13:59:45,210 WARN  [6a577f1c-7e4d-4c77-b0b9-9b569112248c main] DataNucleus.MetaData: Metadata has jdbc-type of null yet this is not valid. Ignored
+2021-05-29 13:59:45,210 WARN  [6a577f1c-7e4d-4c77-b0b9-9b569112248c main] DataNucleus.MetaData: Metadata has jdbc-type of null yet this is not valid. Ignored
+2021-05-29 13:59:45,210 WARN  [6a577f1c-7e4d-4c77-b0b9-9b569112248c main] DataNucleus.MetaData: Metadata has jdbc-type of null yet this is not valid. Ignored
+Hive Session ID = 31400f0f-aeb8-4b2f-b889-252fbde5e64d
+Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+
+hive>
+
+#Creating and using database
+
+hive> create database kunal_flight_db;
+OK
+Time taken: 0.919 seconds
+
+hive> use kunal_flight_db;
+OK
+Time taken: 0.034 seconds
+
+#Create,Alter,drop command usage
+
+hive> create table kunal_flight (fno int, year int,dest varchar(10), delay float);
+OK
+Time taken: 0.092 seconds
+
+hive> alter table kunal_flight rename to flight_info;
+OK
+Time taken: 0.159 seconds
+
+hive> alter table flight_info add columns (src varchar(10));
+OK
+Time taken: 0.114 seconds
+
+hive> alter table flight_info change src source varchar(30);
+OK
+Time taken: 0.093 seconds
+
+hive> drop table flight_info;
+OK
+Time taken: 0.409 seconds
+
+#Creating and Inserting Data
+
+hive> create table flight_info (fno int, year int, dest varchar(10), source varchar(10), delay float)
+    > row format delimited
+    > fields terminated by ','
+    > lines terminated by '\n'
+    > stored as textfile;
+OK
+Time taken: 0.096 seconds
+
+hive> insert into flight_info values(999,2021, "Pune", "Kolkata",15.0);
+
+Query ID = deepak_20210529141146_7083b661-5eab-4c85-84d2-80eddd2ad16c
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2021-05-29 14:11:47,601 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local1420284473_0002
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to directory hdfs://0.0.0.0:9000/user/hive/warehouse/kunal_flight_db.db/flight_info/.hive-staging_hive_2021-05-29_14-11-46_074_2192440115839305415-1/-ext-10000
+Loading data to table kunal_flight_db.flight_info
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 140 HDFS Write: 420 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+OK
+Time taken: 1.767 seconds
+
+hive> insert into flight_info values(888,2021, "Kolkata", "Lucknow",11.0);
+
+Query ID = deepak_20210529141211_bd96ec10-2b5c-414d-98de-7ab9898a31b4
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2021-05-29 14:12:13,267 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local261870108_0003
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to directory hdfs://0.0.0.0:9000/user/hive/warehouse/kunal_flight_db.db/flight_info/.hive-staging_hive_2021-05-29_14-12-11_760_4578642206392575544-1/-ext-10000
+Loading data to table kunal_flight_db.flight_info
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 306 HDFS Write: 646 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+OK
+Time taken: 1.772 seconds
+
+hive> insert into flight_info values(222,2021, "Paris", "Lucknow",1.0);
+
+Query ID = deepak_20210529141314_44cfbf25-4577-489b-acd8-79507e98b489
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2021-05-29 14:13:16,121 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local777661240_0004
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to directory hdfs://0.0.0.0:9000/user/hive/warehouse/kunal_flight_db.db/flight_info/.hive-staging_hive_2021-05-29_14-13-14_654_2424660907513364127-1/-ext-10000
+Loading data to table kunal_flight_db.flight_info
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 586 HDFS Write: 866 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+OK
+Time taken: 1.696 seconds
+
+hive> insert into flight_info values(501,2021, "New Delhi", "New York",60.0);
+
+Query ID = deepak_20210529141341_03b98337-908f-46b3-b458-76dec41e8883
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2021-05-29 14:13:42,582 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local774227668_0005
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to directory hdfs://0.0.0.0:9000/user/hive/warehouse/kunal_flight_db.db/flight_info/.hive-staging_hive_2021-05-29_14-13-41_111_6324612179820135275-1/-ext-10000
+Loading data to table kunal_flight_db.flight_info
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 752 HDFS Write: 1098 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+OK
+Time taken: 1.672 seconds
+
+hive> SELECT * from flight_info;
+OK
+999	2021	Pune	Kolkata	15.0
+888	2021	Kolkata	Lucknow	11.0
+222	2021	Paris	Lucknow	1.0
+501	2021	New Delhi	New York	60.0
+
+#Creating another Table
+
+hive> create table price_info (fno int,price float)
+    > row format delimited
+    > fields terminated by ','
+    > lines terminated by '\n'
+    > stored as textfile;
+OK
+Time taken: 0.056 seconds
+
+hive> insert into price_info values(999,4000.0);
+
+Query ID = deepak_20210529141506_0c9c681a-7bd8-4fc4-baa9-5a4388a5cfc8
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2021-05-29 14:15:07,698 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local577538385_0006
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to directory hdfs://0.0.0.0:9000/user/hive/warehouse/kunal_flight_db.db/price_info/.hive-staging_hive_2021-05-29_14-15-06_274_8465214401669483415-1/-ext-10000
+Loading data to table kunal_flight_db.price_info
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 1152 HDFS Write: 1284 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+OK
+Time taken: 1.614 seconds
+
+hive> insert into price_info values(888,4400.0);
+
+Query ID = deepak_20210529141518_edfd40d8-c2ed-4e46-b8d3-10069d5e7fd3
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2021-05-29 14:15:19,924 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local1336640807_0007
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to directory hdfs://0.0.0.0:9000/user/hive/warehouse/kunal_flight_db.db/price_info/.hive-staging_hive_2021-05-29_14-15-18_547_5001096072161012310-1/-ext-10000
+Loading data to table kunal_flight_db.price_info
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 1316 HDFS Write: 1470 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+OK
+Time taken: 1.675 seconds
+
+hive> insert into price_info values(222,54800.0);
+
+Query ID = deepak_20210529141544_c74fa6c8-164c-454e-b9c8-1863485a1d13
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2021-05-29 14:15:46,211 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local1065391407_0008
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to directory hdfs://0.0.0.0:9000/user/hive/warehouse/kunal_flight_db.db/price_info/.hive-staging_hive_2021-05-29_14-15-44_835_3632118495493195500-1/-ext-10000
+Loading data to table kunal_flight_db.price_info
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 1480 HDFS Write: 1658 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+OK
+Time taken: 1.558 seconds
+
+hive> insert into price_info values(501,14800.0);
+
+Query ID = deepak_20210529141602_97e2d870-a511-403e-bc27-34da42792278
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2021-05-29 14:16:04,259 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local2074669844_0009
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to directory hdfs://0.0.0.0:9000/user/hive/warehouse/kunal_flight_db.db/price_info/.hive-staging_hive_2021-05-29_14-16-02_737_7135616158640872142-1/-ext-10000
+Loading data to table kunal_flight_db.price_info
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 1644 HDFS Write: 1846 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+OK
+Time taken: 1.697 seconds
+
+hive> SELECT * from price_info;
+OK
+999	4000.0
+888	4400.0
+222	54800.0
+501	14800.0
+Time taken: 0.093 seconds, Fetched: 4 row(s)
+
+#Joining Table
+
+hive> select a.fno,a.year,a.dest,a.source,b.price
+    > from flight_info a join price_info b
+    > on (a.fno = b.fno);
+Query ID = deepak_20210529141657_5a8b4b8e-3373-4d8c-990c-ecaadf42f32d
+Total jobs = 1
+Execution completed successfully
+MapredLocal task succeeded
+Launching Job 1 out of 1
+Number of reduce tasks is set to 0 since there's no reduce operator
+Job running in-process (local Hadoop)
+2021-05-29 14:17:08,049 Stage-3 map = 100%,  reduce = 0%
+Ended Job = job_local1676337647_0010
+MapReduce Jobs Launched: 
+Stage-Stage-3:  HDFS Read: 1067 HDFS Write: 923 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+OK
+
+999	2021	Pune	Kolkata	4000.0
+888	2021	Kolkata	Lucknow	4400.0
+222	2021	Paris	Lucknow	54800.0
+501	2021	New Delhi	New York	14800.0
+Time taken: 10.648 seconds, Fetched: 4 row(s)
+
+hive> select avg(delay) from flight_info where year=2021;
+Query ID = deepak_20210529141738_c5dd7226-da91-4abe-8101-9cfbad177650
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2021-05-29 14:17:39,909 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local313957531_0011
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 2368 HDFS Write: 1846 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+OK
+21.75
+Time taken: 1.394 seconds, Fetched: 1 row(s)
+
+hive> 
+
+
+hbase(main):001:0> create 'customer_info',’ID’,’fno’,’name’
+hbase(main):001:0> put ‘customer_info’,‘1’,’personaldata:ID’,’111’
+hbase(main):001:0> put ‘customer_info’,‘1’,’personaldata:fno’,’13’
+hbase(main):001:0> put ‘customer_info’,‘1’,’personaldata:name’,’Shree’
+hbase(main):001:0> put ‘customer_info’,‘2’,’personaldata:ID’,’222’
+hbase(main):001:0> put ‘customer_info’,‘2’,’personaldata:fno’,’344’
+hbase(main):001:0> put ‘customer_info’,‘2’,’personaldata:name’,’Amit’
+
+hive> CREATE EXTERNAL TABLE IF NOT EXISTS customer_info(id INT, fno INT, name STRING) 
+    > STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler' 
+    > WITH SERDEPROPERTIES ("hbase.columns.mapping" = " : key, per : ID, per:fno ,per: name") 
+    > TBLPROPERTIES("hbase.table.name" = "customer_info");
